@@ -30,8 +30,10 @@ if($result = $rds->query("SELECT * FROM k_antiproxy WHERE steamid=$id")) {
 }
 
 function get_userip() {
-    if(isset($_SERVER)) {    
-        if(isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+    if(isset($_SERVER)) {
+        if(isset($_SERVER['HTTP_CF_CONNECTING_IP'])) {
+            return $_SERVER['HTTP_CF_CONNECTING_IP'];
+        } elseif(isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
             return $_SERVER['HTTP_X_FORWARDED_FOR'];
         } elseif(isset($_SERVER['HTTP_CLIENT_IP'])) {
             return $_SERVER['HTTP_CLIENT_IP'];
